@@ -2,6 +2,7 @@ export const courses = [
   {
     id: 1,
     name: "Tecnologias Digitais e Gestão",
+    color: "#ca3b33",
     challenges: [
       {
         type: "tf",
@@ -20,7 +21,7 @@ export const courses = [
         answer: "B"
       },
       {
-        type: "complete", // Note: type kept as 'complete' for logic compatibility if needed, but UI will show as multiple choice
+        type: "complete",
         question: "Neste curso aprendes a integrar tecnologia para tornar as empresas mais ______ e competitivas.",
         options: [
           { id: "A", text: "Eficientes e Digitais" },
@@ -34,6 +35,7 @@ export const courses = [
   {
     id: 2,
     name: "Política, Economia e Sociedade",
+    color: "#d5462a",
     challenges: [
       {
         type: "tf",
@@ -66,6 +68,7 @@ export const courses = [
   {
     id: 3,
     name: "Desenvolvimento de Software e Aplicações",
+    color: "#753b99",
     challenges: [
       {
         type: "tf",
@@ -98,6 +101,7 @@ export const courses = [
   {
     id: 4,
     name: "Matemática Aplicada e Tecnologias Digitais",
+    color: "#95c5db",
     challenges: [
       {
         type: "tf",
@@ -130,6 +134,7 @@ export const courses = [
   {
     id: 5,
     name: "Tecnologias Digitais e Automação",
+    color: "#a2a2a2",
     challenges: [
       {
         type: "tf",
@@ -162,6 +167,7 @@ export const courses = [
   {
     id: 6,
     name: "Tecnologias Digitais e Inteligência Artificial",
+    color: "#e0b52b",
     challenges: [
       {
         type: "tf",
@@ -194,6 +200,7 @@ export const courses = [
   {
     id: 7,
     name: "Tecnologias Digitais e Saúde",
+    color: "#b2bfa8",
     challenges: [
       {
         type: "tf",
@@ -226,6 +233,7 @@ export const courses = [
   {
     id: 8,
     name: "Tecnologias Digitais e Segurança de Informação",
+    color: "#781f39",
     challenges: [
       {
         type: "tf",
@@ -258,6 +266,7 @@ export const courses = [
   {
     id: 9,
     name: "Tecnologias Digitais Educativas",
+    color: "#386b47",
     challenges: [
       {
         type: "tf",
@@ -290,6 +299,7 @@ export const courses = [
   {
     id: 10,
     name: "Tecnologias Digitais, Edifícios e Construção Sustentável",
+    color: "#9b3c28",
     challenges: [
       {
         type: "tf",

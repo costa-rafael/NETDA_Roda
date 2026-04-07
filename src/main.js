@@ -22,18 +22,25 @@ let selectedCourse = null;
 let currentChallenge = null;
 let selectedOptionId = null;
 
+// Helper for text contrast
+function getContrastYIQ(hexcolor){
+    hexcolor = hexcolor.replace("#", "");
+    var r = parseInt(hexcolor.substr(0,2),16);
+    var g = parseInt(hexcolor.substr(2,2),16);
+    var b = parseInt(hexcolor.substr(4,2),16);
+    var yiq = ((r*299)+(g*587)+(b*114))/1000;
+    return (yiq >= 128) ? 'black' : 'white';
+}
+
 // Initialize Wheel
 function initWheel() {
   const numSegments = courses.length;
   const angleStep = 360 / numSegments;
-  const colors = [
-    '#D4AF37', '#E5C04A', '#D4AF37', '#E5C04A', '#D4AF37',
-    '#E5C04A', '#D4AF37', '#E5C04A', '#D4AF37', '#E5C04A'
-  ];
 
   courses.forEach((course, i) => {
     const startAngle = i * angleStep;
     const endAngle = (i + 1) * angleStep;
+    const contrastColor = getContrastYIQ(course.color);
     
     // Create Path
     const x1 = 50 + 50 * Math.cos((Math.PI * (startAngle - 90)) / 180);
@@ -45,7 +52,7 @@ function initWheel() {
     
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     path.setAttribute('d', d);
-    path.setAttribute('fill', colors[i]);
+    path.setAttribute('fill', course.color);
     path.setAttribute('stroke', 'white');
     path.setAttribute('stroke-width', '0.5');
     wheelSvg.appendChild(path);
@@ -56,7 +63,7 @@ function initWheel() {
     
     text.setAttribute('x', '50');
     text.setAttribute('y', '15');
-    text.setAttribute('fill', 'white');
+    text.setAttribute('fill', contrastColor);
     text.setAttribute('font-size', '2.5');
     text.setAttribute('font-weight', '600');
     text.setAttribute('text-anchor', 'middle');

@@ -1,16 +1,16 @@
 :root {
-  --primary-color: #D4AF37; /* Ochre / Amarelo Torrado */
-  --bg-color: #F5F5F7; /* Apple Gray */
-  --card-bg: #FFFFFF;
-  --text-primary: #1D1D1F;
-  --text-secondary: #86868B;
-  --accent-soft: #E8E8ED;
-  --success-color: #34C759;
-  --error-color: #FF3B30;
-  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.05);
-  --shadow-strong: 0 20px 40px rgba(0, 0, 0, 0.1);
+  --primary-color: #00A9E0; /* ISCTE Blue */
+  --bg-color: #F8FAFC; 
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --text-primary: #0F172A;
+  --text-secondary: #64748B;
+  --accent-soft: #E2E8F0;
+  --success-color: #10B981;
+  --error-color: #EF4444;
+  --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-strong: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   --border-radius: 24px;
-  --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * {
@@ -29,7 +29,40 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 2px 2px, rgba(0, 169, 224, 0.05) 1px, transparent 0);
+  background-size: 40px 40px;
+  z-index: -2;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg width='1000' height='1000' viewBox='0 0 1000 1000' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M100 100h200v200m400-100h100v300m-500 200h300v-100m200 400h100v-200M100 700v200m700-600V100' stroke='%2300A9E0' fill='none' stroke-width='1' stroke-opacity='0.1' stroke-dasharray='10,10'/%3E%3Ccircle cx='100' cy='100' r='2' fill='%2300A9E0' fill-opacity='0.2'/%3E%3Ccircle cx='300' cy='300' r='2' fill='%2300A9E0' fill-opacity='0.2'/%3E%3Ccircle cx='800' cy='100' r='2' fill='%2300A9E0' fill-opacity='0.2'/%3E%3C/svg%3E");
+  background-size: 800px 800px;
+  opacity: 0.6;
+  z-index: -1;
+  animation: bgMove 60s linear infinite;
+}
+
+@keyframes bgMove {
+  from { background-position: 0 0; }
+  to { background-position: 800px 800px; }
 }
 
 #app {
@@ -46,21 +79,30 @@ body {
 header {
   text-align: center;
   animation: fadeInDown 0.8s ease-out;
-  padding: 4rem 2rem;
+  padding: 1.5rem 1rem;
   width: 100%;
   position: relative;
-  background: white;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: var(--border-radius);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   box-shadow: var(--shadow-soft);
   overflow: hidden;
+  transition: var(--transition-smooth);
+}
+
+header:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-strong);
 }
 
 .circuit-decoration {
   position: absolute;
-  width: 300px;
-  height: 300px;
+  width: 180px;
+  height: 180px;
   background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 10h10v10m20 0h10v10M10 50h40M60 10v40M80 80h10M30 70v20h20' stroke='%23D4AF37' fill='none' stroke-width='0.5' stroke-opacity='0.3'/%3E%3Ccircle cx='10' cy='10' r='1' fill='%23D4AF37' fill-opacity='0.3'/%3E%3Ccircle cx='40' cy='20' r='1' fill='%23D4AF37' fill-opacity='0.3'/%3E%3Ccircle cx='50' cy='50' r='1' fill='%23D4AF37' fill-opacity='0.3'/%3E%3C/svg%3E");
-  opacity: 0.5;
+  opacity: 0.3;
   pointer-events: none;
 }
 
@@ -77,10 +119,10 @@ header {
 }
 
 h1 {
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: 800;
   letter-spacing: -0.04em;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.25rem;
   background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary-color) 100%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -89,7 +131,7 @@ h1 {
 
 p.subtitle {
   color: var(--text-secondary);
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 /* Wheel Container */
@@ -232,14 +274,15 @@ button:disabled {
   max-width: 500px;
   padding: 2.5rem;
   border-radius: var(--border-radius);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow: var(--shadow-strong);
-  transform: translateY(20px);
+  transform: translateY(20px) scale(0.95);
   transition: var(--transition-smooth);
   text-align: center;
 }
 
 .overlay.active .challenge-card {
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 .challenge-type {

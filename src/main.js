@@ -9,7 +9,6 @@ const rewardOverlay = document.getElementById('reward-overlay');
 const courseNameEl = document.getElementById('course-name');
 const questionTextEl = document.getElementById('question-text');
 const optionsContainer = document.getElementById('options-container');
-const inputContainer = document.getElementById('input-container');
 const feedbackMsg = document.getElementById('feedback-msg');
 const submitBtn = document.getElementById('submit-btn');
 const nextBtn = document.getElementById('next-btn');
@@ -114,7 +113,6 @@ function showChallenge(course) {
   questionTextEl.textContent = currentChallenge.question;
   
   optionsContainer.innerHTML = '';
-  inputContainer.style.display = 'none'; // Always hidden now
   feedbackMsg.textContent = '';
   feedbackMsg.className = 'feedback-msg';
   submitBtn.style.display = 'block';

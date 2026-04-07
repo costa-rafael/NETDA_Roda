@@ -3,7 +3,6 @@ import { courses } from './data.js';
 // DOM Elements
 const wheel = document.getElementById('wheel');
 const wheelSvg = document.getElementById('wheel-svg');
-const spinBtn = document.getElementById('spin-btn');
 const challengeOverlay = document.getElementById('challenge-overlay');
 const rewardOverlay = document.getElementById('reward-overlay');
 const courseNameEl = document.getElementById('course-name');
@@ -20,6 +19,12 @@ let currentRotation = 0;
 let selectedCourse = null;
 let currentChallenge = null;
 let selectedOptionId = null;
+
+// Helper for Hex to RGB
+function hexToRgb(hex) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : null;
+}
 
 // Helper for text contrast
 function getContrastYIQ(hexcolor){
@@ -85,7 +90,6 @@ function initWheel() {
 function spin() {
   if (isSpinning) return;
   isSpinning = true;
-  spinBtn.disabled = true;
   
   const extraDegrees = Math.floor(Math.random() * 360);
   const totalDegrees = 1800 + extraDegrees;
@@ -100,14 +104,21 @@ function spin() {
     const segmentIndex = Math.floor(winningAngle / (360 / courses.length));
     
     selectedCourse = courses[segmentIndex];
-    showChallenge(selectedCourse);
-  }, 5000);
+    
+    // Brief anticipation pause
+    setTimeout(() => {
+      showChallenge(selectedCourse);
+    }, 600);
+  }, 6000);
 }
 
 // Challenge logic
 function showChallenge(course) {
   const randomIndex = Math.floor(Math.random() * course.challenges.length);
   currentChallenge = course.challenges[randomIndex];
+  
+  // Update theme color
+  document.documentElement.style.setProperty('--theme-color-rgb', hexToRgb(course.color));
   
   courseNameEl.textContent = course.name;
   questionTextEl.textContent = currentChallenge.question;
@@ -190,12 +201,10 @@ function showReward() {
 
 function resetGame() {
   rewardOverlay.classList.remove('active');
-  spinBtn.disabled = false;
 }
 
 // Click anywhere on wheel to spin
 wheel.onclick = spin;
-spinBtn.onclick = spin;
 submitBtn.onclick = checkAnswer;
 restartBtn.onclick = resetGame;
 

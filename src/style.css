@@ -418,8 +418,39 @@ input[type="text"]:focus {
 }
 
 /* Mobile Adjustments */
-@media (max-width: 600px) {
-  h1 { font-size: 1.8rem; }
-  .wheel-container { width: 320px; height: 320px; }
-  .challenge-card { padding: 1.5rem; }
+@media (max-width: 768px) {
+  .wheel-container {
+    width: 80vw;
+    height: 80vw;
+  }
+  
+  .wheel-indicator {
+    width: 40px;
+    top: -15px;
+  }
+
+  .challenge-card {
+    padding: 2.5rem 1.5rem;
+    max-width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .challenge-course {
+    font-size: 1.5rem;
+  }
+
+  .challenge-question {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+
+  .option-btn {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+
+  .controls-action {
+    margin-top: 1.5rem;
+  }
 }

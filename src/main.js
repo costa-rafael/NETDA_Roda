@@ -93,9 +93,9 @@ function spin() {
   isSpinning = true;
   
   const extraDegrees = Math.floor(Math.random() * 360);
-  const totalDegrees = 1800 + extraDegrees;
+  const totalDegrees = 10800 + extraDegrees; // Ultra-high energy 30 rotations
   currentRotation += totalDegrees;
-  wheel.style.transition = 'transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99)';
+  wheel.style.transition = 'transform 5s cubic-bezier(0.15, 0, 0.15, 1.05)';
   wheel.style.transform = `rotate(${currentRotation}deg)`;
   
   // High-fidelity physical flacker animation
@@ -144,7 +144,7 @@ function spin() {
     setTimeout(() => {
       showChallenge(selectedCourse);
     }, 600);
-  }, 4000);
+  }, 5000); // Match new transition duration
 }
 
 // Challenge logic

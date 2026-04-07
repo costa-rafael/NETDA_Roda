@@ -91,6 +91,10 @@ function spin() {
   if (isSpinning) return;
   isSpinning = true;
   
+  // Intensify background during spin
+  document.documentElement.style.setProperty('--bg-theme-color-rgb', '0, 169, 224');
+  document.body.style.opacity = '0.9';
+  
   const extraDegrees = Math.floor(Math.random() * 360);
   const totalDegrees = 1800 + extraDegrees;
   currentRotation += totalDegrees;
@@ -117,8 +121,11 @@ function showChallenge(course) {
   const randomIndex = Math.floor(Math.random() * course.challenges.length);
   currentChallenge = course.challenges[randomIndex];
   
-  // Update theme color
-  document.documentElement.style.setProperty('--theme-color-rgb', hexToRgb(course.color));
+  // Update theme colors
+  const rgb = hexToRgb(course.color);
+  document.documentElement.style.setProperty('--theme-color-rgb', rgb);
+  document.documentElement.style.setProperty('--bg-theme-color-rgb', rgb);
+  document.body.style.opacity = '1';
   
   courseNameEl.textContent = course.name;
   questionTextEl.textContent = currentChallenge.question;
@@ -201,6 +208,8 @@ function showReward() {
 
 function resetGame() {
   rewardOverlay.classList.remove('active');
+  // Reset background
+  document.documentElement.style.setProperty('--bg-theme-color-rgb', '0, 169, 224');
 }
 
 // Click anywhere on wheel to spin

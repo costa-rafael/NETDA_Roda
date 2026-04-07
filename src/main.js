@@ -144,7 +144,7 @@ function spin() {
     setTimeout(() => {
       showChallenge(selectedCourse);
     }, 600);
-  }, 5000); // Match new transition duration
+  }, 6000);
 }
 
 // Challenge logic

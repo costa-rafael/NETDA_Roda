@@ -26,14 +26,15 @@ function hexToRgb(hex) {
   return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : null;
 }
 
-// Helper for text contrast
+// Helper for text contrast - returning premium Apple-style tones
 function getContrastYIQ(hexcolor){
     hexcolor = hexcolor.replace("#", "");
     var r = parseInt(hexcolor.substr(0,2),16);
     var g = parseInt(hexcolor.substr(2,2),16);
     var b = parseInt(hexcolor.substr(4,2),16);
     var yiq = ((r*299)+(g*587)+(b*114))/1000;
-    return (yiq >= 128) ? 'black' : 'white';
+    // Returns #1D1D1F (Apple Black) for light bg, #FBFBFD (Cloud White) for dark bg
+    return (yiq >= 128) ? '#1D1D1F' : '#FBFBFD';
 }
 
 // Initialize Wheel
@@ -66,9 +67,9 @@ function initWheel() {
     const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
     
     text.setAttribute('x', '50');
-    text.setAttribute('y', '15');
+    text.setAttribute('y', '6'); // Even higher up to use maximum radius breadth
     text.setAttribute('fill', contrastColor);
-    text.setAttribute('font-size', '2.5');
+    text.setAttribute('font-size', '1.8'); // Safer font size for long multi-line names
     text.setAttribute('font-weight', '600');
     text.setAttribute('text-anchor', 'middle');
     text.setAttribute('transform', `rotate(${textAngle}, 50, 50)`);
@@ -78,7 +79,7 @@ function initWheel() {
         const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
         tspan.textContent = word;
         tspan.setAttribute('x', '50');
-        tspan.setAttribute('dy', index === 0 ? '0' : '3');
+        tspan.setAttribute('dy', index === 0 ? '0' : '2.8'); // Tighter line height
         text.appendChild(tspan);
     });
 
@@ -204,8 +205,12 @@ function resetGame() {
 }
 
 
-// Click anywhere on wheel to spin
-wheel.onclick = spin;
+// Click anywhere on bg to spin (if not spinning and no overlay)
+document.onclick = (e) => {
+    if (isSpinning) return;
+    if (challengeOverlay.classList.contains('active') || rewardOverlay.classList.contains('active')) return;
+    spin();
+};
 submitBtn.onclick = checkAnswer;
 restartBtn.onclick = resetGame;
 

@@ -93,7 +93,7 @@ function spin() {
   isSpinning = true;
   
   const extraDegrees = Math.floor(Math.random() * 360);
-  const totalDegrees = 7200 + extraDegrees; // Solid 20 rotations
+  const totalDegrees = 2880 + extraDegrees; // 8 rotations - smooth in 4s
   currentRotation += totalDegrees;
   
   wheel.style.transform = `rotate(${currentRotation}deg)`;
@@ -144,7 +144,7 @@ function spin() {
     setTimeout(() => {
       showChallenge(selectedCourse);
     }, 600);
-  }, 6000);
+  }, 4000); 
 }
 
 // Challenge logic

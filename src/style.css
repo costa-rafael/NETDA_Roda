@@ -141,12 +141,11 @@ p.subtitle {
   height: 100%;
   border-radius: 50%;
   position: relative;
-  transition: transform 6s cubic-bezier(0.15, 0, 0.15, 1.05);
+  transition: transform 4s cubic-bezier(0.15, 0, 0.15, 1.05);
   cursor: pointer;
   background: #FFF;
   border: 14px solid white;
   box-shadow: 0 0 0 1px rgba(0,0,0,0.05), 0 20px 40px rgba(0,0,0,0.04);
-  animation: idlePulse 4s infinite ease-in-out;
 }
 
 @keyframes idlePulse {

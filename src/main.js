@@ -108,7 +108,7 @@ function spin() {
     setTimeout(() => {
       showChallenge(selectedCourse);
     }, 600);
-  }, 6000);
+  }, 4000);
 }
 
 // Challenge logic

@@ -93,9 +93,9 @@ function spin() {
   isSpinning = true;
   
   const extraDegrees = Math.floor(Math.random() * 360);
-  const totalDegrees = 10800 + extraDegrees; // Ultra-high energy 30 rotations
+  const totalDegrees = 7200 + extraDegrees; // Solid 20 rotations
   currentRotation += totalDegrees;
-  wheel.style.transition = 'transform 5s cubic-bezier(0.15, 0, 0.15, 1.05)';
+  
   wheel.style.transform = `rotate(${currentRotation}deg)`;
   
   // High-fidelity physical flacker animation

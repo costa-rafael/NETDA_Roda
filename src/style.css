@@ -107,13 +107,15 @@ p.subtitle {
   width: 60px;
   z-index: 10;
   filter: drop-shadow(0 4px 10px rgba(0,0,0,0.15));
-  animation: indicatorShake 1s infinite alternate ease-in-out;
+  animation: indicatorIdle 2s infinite ease-in-out;
 }
 
-@keyframes indicatorShake {
-  from { transform: translateX(-50%) translateY(0) scale(1.1); }
-  to { transform: translateX(-50%) translateY(5px) scale(1); }
+@keyframes indicatorIdle {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(5px); }
 }
+
+
 
 .wheel-inner {
   width: 100%;

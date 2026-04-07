@@ -12,6 +12,7 @@ const feedbackMsg = document.getElementById('feedback-msg');
 const submitBtn = document.getElementById('submit-btn');
 const nextBtn = document.getElementById('next-btn');
 const restartBtn = document.getElementById('restart-btn');
+const indicator = document.querySelector('.wheel-indicator');
 
 // State
 let isSpinning = false;
@@ -94,8 +95,42 @@ function spin() {
   const extraDegrees = Math.floor(Math.random() * 360);
   const totalDegrees = 1800 + extraDegrees;
   currentRotation += totalDegrees;
-  
+  wheel.style.transition = 'transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99)';
   wheel.style.transform = `rotate(${currentRotation}deg)`;
+  
+  // High-fidelity physical flacker animation
+  let lastRot = 0;
+  function updateFlacker() {
+    if (!isSpinning) return;
+    
+    // Get current rotation from the wheel element matrix
+    const style = window.getComputedStyle(wheel);
+    const matrix = new WebKitCSSMatrix(style.transform);
+    const angle = Math.abs(Math.round(Math.atan2(matrix.m12, matrix.m11) * (180 / Math.PI)));
+    
+    // Segment width for 12 courses = 30deg
+    const segmentAngle = 360 / courses.length;
+    const progress = (angle % segmentAngle) / segmentAngle;
+    
+    // Physical snap effect: bends as it passes, snaps on joint
+    let snapAngle = 0;
+    if (progress > 0.7) {
+      snapAngle = (progress - 0.7) * -40; // Tension / Resistance
+    } else if (progress < 0.15) {
+      snapAngle = (0.15 - progress) * 20; // Snap-forward inertia
+    }
+
+    indicator.style.transform = `translateX(-50%) rotate(${snapAngle}deg)`;
+    
+    if (isSpinning) {
+      requestAnimationFrame(updateFlacker);
+    } else {
+      indicator.style.transform = 'translateX(-50%) rotate(0deg)';
+    }
+  }
+  
+  // Start the physical simulation
+  requestAnimationFrame(updateFlacker);
 
   setTimeout(() => {
     isSpinning = false;
@@ -142,7 +177,8 @@ function showChallenge(course) {
         ? (opt === 'Verdadeiro' ? true : (opt === 'Falso' ? false : opt)) 
         : opt.id;
     
-    btn.onclick = () => {
+    btn.onclick = (e) => {
+      e.stopPropagation();
       document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       selectedOptionId = optId;
@@ -186,12 +222,18 @@ function checkAnswer() {
     feedbackMsg.textContent = 'Correto! Excelente trabalho.';
     feedbackMsg.className = 'feedback-msg correct';
     nextBtn.textContent = 'PRÓXIMO';
-    nextBtn.onclick = showReward;
+    nextBtn.onclick = (e) => {
+        e.stopPropagation();
+        showReward();
+    };
   } else {
     feedbackMsg.textContent = 'Oops! Não foi desta vez.';
     feedbackMsg.className = 'feedback-msg incorrect';
     nextBtn.textContent = 'TENTAR NOVAMENTE';
-    nextBtn.onclick = () => challengeOverlay.classList.remove('active');
+    nextBtn.onclick = (e) => {
+        e.stopPropagation();
+        challengeOverlay.classList.remove('active');
+    };
   }
 }
 
@@ -200,18 +242,29 @@ function showReward() {
   rewardOverlay.classList.add('active');
 }
 
-function resetGame() {
+function resetGame(e) {
+  if (e) e.stopPropagation();
   rewardOverlay.classList.remove('active');
 }
 
 
 // Click anywhere on bg to spin (if not spinning and no overlay)
 document.onclick = (e) => {
+    // Only spin if we click the background/body itself or the wheel
+    // and not if we are spinning or an overlay is open
     if (isSpinning) return;
     if (challengeOverlay.classList.contains('active') || rewardOverlay.classList.contains('active')) return;
+    
     spin();
 };
-submitBtn.onclick = checkAnswer;
-restartBtn.onclick = resetGame;
+
+submitBtn.onclick = (e) => {
+    e.stopPropagation();
+    checkAnswer();
+};
+restartBtn.onclick = (e) => {
+    e.stopPropagation();
+    resetGame(e);
+};
 
 window.onload = initWheel;
